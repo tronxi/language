@@ -11,5 +11,7 @@ fmod SYNTAX is
     op if(_) {_} : Condition Program -> Program [ctor] .
     op if(_) {_} else {_} : Condition Program Program -> Program [ctor] .
     op while(_) {_} : Condition Program -> Program [ctor] .
+    op for((_);(_);(_);) {_} : Assig Condition Assig Program -> Program [ctor] .
+    op forWithoutInitial((_);(_);) {_} : Condition Assig Program -> Program [ctor] .
     op __ : Program Program -> Program [ctor assoc id: skip] .
 endfm

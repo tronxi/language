@@ -14,6 +14,7 @@ mod SEMANTICS is
     var E : Expression .
     var P PBody PBodyElse : Program .
     var C : Condition .
+    var A A' : Assig .
 
     rl [print] :
         { print(Q); P | M}
@@ -59,6 +60,24 @@ mod SEMANTICS is
         { while(C){PBody} P | M }
         => 
         { P | M } 
+        if not eval(C, M) .
+
+    rl [initalFor] :
+        { for( (A); (C); (A'); ){PBody} P | M }
+        =>
+        { (A); forWithoutInitial((C); (A'); ){PBody} P | M } .
+
+    crl [forTrue] :
+        { forWithoutInitial((C); (A'); ){PBody} P | M }
+        =>
+        { PBody (A'); forWithoutInitial((C); (A'); ){PBody} P | M }
+        if eval(C, M) .
+ 
+
+    crl [forFalse] :
+        { forWithoutInitial((C); (A'); ){PBody} P | M }
+        =>
+        { P | M }
         if not eval(C, M) .
     
 endm

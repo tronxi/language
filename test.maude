@@ -17,6 +17,10 @@ mod TEST is
         ('centinelaCopy = 'centinela);
         while('centinela gt 0) {
             ('centinela = 'centinela less 1);
+        }
+        ('counter = 0);
+        for(('i = 0 ); ('i lt 10); ('i = 'i sum 1);) {
+            ('counter = 'counter sum 1);
         } .
 
 endm
@@ -25,5 +29,6 @@ endm
 --- red find([ '1 , 1 ][ '2 , 2 ], '2) == find([ '1 , 1 ][ '2 , 2 ], '2).
 --- red eval('1 == 1, memory) .
 --- red program .
+--- red 1 .
 rew { program | none } .
 q
