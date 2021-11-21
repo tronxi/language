@@ -12,6 +12,11 @@ mod TEST is
             ('var3 = 3);
         } else {
             ('var4 = 4 sum 'var1);
+        } 
+        ('centinela = 5 mult 2);
+        ('centinelaCopy = 'centinela);
+        while('centinela gt 0) {
+            ('centinela = 'centinela less 1);
         } .
 
 endm

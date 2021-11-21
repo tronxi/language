@@ -1,17 +1,23 @@
 load type .
 
 fmod EXPRESSION is 
+
     pr TYPE .
+
     sort Expression .
     subsort Type < Expression .
-    op _sum_ : Expression Expression -> Expression [ctor assoc] .
-    op __ : Expression Expression -> Expression [ctor assoc] .
+
+    op _sum_ : Expression Expression -> Expression [ctor assoc comm] .
+    op _less_ : Expression Expression -> Expression [ctor] .
+    op _mult_ : Expression Expression -> Expression [ctor assoc comm] .
     
     vars T T' : Type .
     var M : Memory .
     
     op eval : Expression Memory -> Type .
     eq eval (T sum T', M) = load(M,T) + load(M,T') .
+    eq eval (T less T', M) = load(M,T) - load(M,T') .
+    eq eval (T mult T', M) = load(M,T) * load(M,T') .
     eq eval (T, M) = T [owise].
 
 
