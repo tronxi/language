@@ -19,5 +19,6 @@ fmod ASSIGNMENT is
     eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
 
 endfm
+
 --- red 'q = 5 + load([ 'a , 1] [ 'b , 2], 'b) .
 --- red assigInMemory('q = 'a + 1, ['a, 3]) .
