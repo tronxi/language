@@ -1,0 +1,23 @@
+fmod MEMORY is
+    pr QID .
+    pr INT .
+    sorts Pair Memory .
+    subsort Pair < Memory .
+
+    op [_,_] : Qid Int -> Pair [ctor] .
+    op none : -> Memory [ctor] .
+    op __ : Memory Memory -> Memory [ctor assoc comm id: none] .
+
+    vars M M' : Memory .
+    var Q : Qid .
+    vars V V' : Int .
+
+    op _ [_\_] : Memory Qid Int -> Memory .
+    eq ( M [ Q , V ]) [ Q \ V' ] = [ Q , V' ] M .
+    eq M [ Q \ V ] = [ Q , V ] M  [owise] .
+
+    op find : Memory Qid -> Int .
+    eq find (M [Q, V] M', Q) = V .
+    eq find (M, Q) = 0 [owise] .
+
+endfm

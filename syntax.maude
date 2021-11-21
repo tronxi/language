@@ -1,0 +1,15 @@
+load condition .
+load assignment .
+fmod SYNTAX is
+    pr CONDITION .
+    pr ASSIGNMENT .
+
+    sort Program .
+    op skip : -> Program [ctor] .
+    op (_); : Assig -> Program [ctor] .
+    op print(_); : Qid -> Program [ctor] .
+    op if(_) {_} : Condition Program -> Program [ctor] .
+    op if(_) {_} else {_} : Condition Program Program -> Program [ctor] .
+    op while(_) {_} : Condition Program -> Program [ctor] .
+    op __ : Program Program -> Program [ctor assoc id: skip] .
+endfm

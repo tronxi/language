@@ -1,0 +1,64 @@
+load syntax .
+load type .
+
+mod SEMANTICS is
+    pr SYNTAX .
+    pr TYPE .
+    
+    sort System .
+
+    op {_|_} : Program Memory -> System [ctor] .
+
+    var M : Memory .
+    var Q Q' : Qid .
+    var E : Expression .
+    var P PBody PBodyElse : Program .
+    var C : Condition .
+
+    rl [print] :
+        { print(Q); P | M}
+        => 
+        { P | M} .
+    
+    rl [assig] : 
+        { (Q = E); P | M}
+        =>
+        { P | assigInMemory(Q = sum(E, M), M) } .
+
+    crl [ifTrue] :
+        { if(C){PBody} P | M }
+        => 
+        { PBody P | M } 
+        if eval(C, M) .
+
+    crl [ifFalse] :
+        { if(C){PBody} P | M }
+        => 
+        { P | M } 
+        if not eval(C, M) .
+
+    crl [ifElseTrue] :
+        { if(C){PBody}else{PBodyElse} P | M }
+        => 
+        { PBody P | M } 
+        if eval(C, M) .
+
+    crl [ifElseFalse] :
+        { if(C){PBody}else{PBodyElse} P | M }
+        => 
+        { PBodyElse P | M } 
+        if not eval(C, M) .
+
+    crl [whileTrue] :
+        { while(C){PBody} P | M }
+        => 
+        { PBody while(C){PBody} P | M } 
+        if eval(C, M) .
+
+    crl [whileFalse] :
+        { while(C){PBody} P | M }
+        => 
+        { P | M } 
+        if not eval(C, M) .
+    
+endm

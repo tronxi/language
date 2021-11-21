@@ -1,0 +1,24 @@
+load type .
+load memory .
+load expression .
+fmod ASSIGNMENT is 
+
+    pr TYPE .
+    pr MEMORY .
+    pr EXPRESSION .
+
+    sort Assig .
+
+    op _=_ : Qid Expression -> Assig .
+
+    var Q : Qid .
+    var E : Expression .
+    var M : Memory .
+
+    op assigInMemory : Assig Memory -> Memory .
+    eq assigInMemory(Q = E, M) = M [Q \ load(M, sum(E, M))] .
+
+endfm
+
+--- red 'q = 5 + load([ 'a , 1] [ 'b , 2], 'b) .
+--- red assigInMemory('q = 'a + 1, ['a, 3]) .

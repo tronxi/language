@@ -1,0 +1,24 @@
+load semantics .
+
+mod TEST is 
+    pr SEMANTICS .
+
+    op program : -> Program .
+    eq program  = 
+        ('var1 = 9);
+        ('var2 = 'var1 sum 3);
+        ('otravar = 'var1);
+        if(9 gt 'var2) {
+            ('var3 = 3);
+        } else {
+            ('var4 = 4 sum 'var1);
+        } .
+
+endm
+--- red 1 .
+--- red (memory) ['2 \ 3] .
+--- red find([ '1 , 1 ][ '2 , 2 ], '2) == find([ '1 , 1 ][ '2 , 2 ], '2).
+--- red eval('1 == 1, memory) .
+--- red program .
+rew { program | none } .
+q

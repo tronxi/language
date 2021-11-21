@@ -1,0 +1,28 @@
+load memory .
+load type .
+fmod CONDITION is
+
+    pr MEMORY .
+    pr TYPE .
+
+    sort Condition .
+
+    op _eq_ : Type Type -> Condition [ctor] .
+    op _neq_ : Type Type -> Condition [ctor] .
+    op _gt_ : Type Type -> Condition [ctor] .
+    op _gte_ : Type Type -> Condition [ctor] .
+    op _lt_ : Type Type -> Condition [ctor] .
+    op _lte_ : Type Type -> Condition [ctor] .
+
+    var T T' : Type .
+    var M : Memory .
+
+    op eval : Condition Memory -> Bool .
+    eq eval(T eq T', M) = load(M, T) == load(M, T') .
+    eq eval(T neq T', M) = load(M, T) =/= load(M, T') .
+    eq eval(T gt T', M) = load(M, T) > load(M, T') .
+    eq eval(T gte T', M) = load(M, T) >= load(M, T') .
+    eq eval(T lt T', M) = load(M, T) < load(M, T') .
+    eq eval(T lte T', M) = load(M, T) <= load(M, T') .
+
+endfm

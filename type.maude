@@ -1,0 +1,20 @@
+load memory .
+fmod TYPE is
+
+    pr MEMORY .
+    sort Type .
+
+    subsorts Qid Int < Type .
+
+    op _ : Qid -> Type [ctor] .
+    op _ : Int -> Type [ctor] .
+
+    var Q : Qid .
+    var M : Memory .
+    var V : Int .
+    op load : Memory Type -> Type .
+    eq load(M, Q) = find(M, Q) .
+    eq load(M, V) = V .
+
+
+endfm
