@@ -1,5 +1,4 @@
 load syntax .
-load type .
 
 mod SEMANTICS is
     pr SYNTAX .

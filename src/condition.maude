@@ -1,4 +1,3 @@
-load memory .
 load type .
 fmod CONDITION is
 

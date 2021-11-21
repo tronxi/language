@@ -1,0 +1,24 @@
+('var1 = 9);
+('var2 = 'var1 sum 3);
+('otravar = 'var1);
+print('var1);
+if(9 gt 'var2) {
+    ('var3 = 3);
+} else {
+    ('var4 = 4 sum 'var1);
+} 
+('centinela = 5 mult 2);
+('centinelaCopy = 'centinela);
+while('centinela gt 0) {
+    ('centinela = 'centinela less 1);
+}
+('counter = 0);
+for(('i = 0 ); ('i lt 10); ('i = 'i sum 1);) {
+    ('counter = 'counter sum 1);
+} 
+('con1 = 1);
+('con2 = 2);
+('con3 = 2);
+if((('con1 eq 1) && 'con2 eq 2) || 'con3 eq 3) {
+    ('con4 = 4);
+}

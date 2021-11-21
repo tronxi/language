@@ -1,0 +1,12 @@
+load ../src/semantics .
+
+mod TEST is 
+    pr SEMANTICS .
+
+    op program : -> Program .
+    eq program  = ${program} .
+
+endm
+
+rew { program | none } .
+q
