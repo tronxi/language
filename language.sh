@@ -1,1 +1,1 @@
-python3 compiler/generator.py program.languge
+python3 compiler/generator.py example.language
