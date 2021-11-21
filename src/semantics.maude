@@ -14,6 +14,11 @@ mod SEMANTICS is
     var P PBody PBodyElse : Program .
     var C : Condition .
     var A A' : Assig .
+    
+    rl [coment] :
+        { // PBody P | M}
+        =>
+        { P | M} .
 
     rl [print] :
         { print(Q); P | M}
