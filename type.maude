@@ -16,5 +16,4 @@ fmod TYPE is
     eq load(M, Q) = find(M, Q) .
     eq load(M, V) = V .
 
-
 endfm

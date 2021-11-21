@@ -22,6 +22,3 @@ fmod EXPRESSION is
 
 
 endfm
---- red sum(5, none) .
---- red load(none,5) + load(none, 3) .
---- red sum(5 sum  'a, [ 'a, 5]) .
