@@ -21,6 +21,12 @@ mod TEST is
         ('counter = 0);
         for(('i = 0 ); ('i lt 10); ('i = 'i sum 1);) {
             ('counter = 'counter sum 1);
+        } 
+        ('con1 = 1);
+        ('con2 = 2);
+        ('con3 = 2);
+        if((('con1 eq 1) && 'con2 eq 2) || 'con3 eq 3) {
+            ('con4 = 4);
         } .
 
 endm
