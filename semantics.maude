@@ -23,7 +23,7 @@ mod SEMANTICS is
     rl [assig] : 
         { (Q = E); P | M}
         =>
-        { P | assigInMemory(Q = sum(E, M), M) } .
+        { P | assigInMemory(Q = E, M) } .
 
     crl [ifTrue] :
         { if(C){PBody} P | M }

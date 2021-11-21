@@ -10,9 +10,9 @@ fmod EXPRESSION is
     vars T T' : Type .
     var M : Memory .
     
-    op sum : Expression Memory -> Type .
-    eq sum (T sum T', M) = load(M,T) + load(M,T') .
-    eq sum (T, M) = T [owise].
+    op eval : Expression Memory -> Type .
+    eq eval (T sum T', M) = load(M,T) + load(M,T') .
+    eq eval (T, M) = T [owise].
 
 
 endfm

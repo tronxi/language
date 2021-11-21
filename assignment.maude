@@ -16,7 +16,7 @@ fmod ASSIGNMENT is
     var M : Memory .
 
     op assigInMemory : Assig Memory -> Memory .
-    eq assigInMemory(Q = E, M) = M [Q \ load(M, sum(E, M))] .
+    eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
 
 endfm
 
