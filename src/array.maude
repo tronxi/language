@@ -1,0 +1,12 @@
+load type .
+
+fmod ARRAY is 
+    pr TYPE .
+
+    sort Array .
+    subsort Type < Array .
+
+    op arrayEmpty : -> Array [ctor] .
+    op __ : Array Array -> Array [ctor assoc id: arrayEmpty] .
+
+endfm

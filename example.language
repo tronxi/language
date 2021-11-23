@@ -1,5 +1,7 @@
 ('var1 = 9);
 ('var2 = 'var1 sum 3);
+('arr = [1 2 3]);
+('test = 'arr<1>);
 //('otravar = 'var1);
 print('var1);
 if(9 gt 'var2) {

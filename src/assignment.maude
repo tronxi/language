@@ -1,19 +1,30 @@
 load expression .
+load array .
 fmod ASSIGNMENT is 
 
     pr TYPE .
     pr MEMORY .
     pr EXPRESSION .
+    pr ARRAY .
+    pr CONVERSION .
 
     sort Assig .
 
-    op _=_ : Qid Expression -> Assig .
+    op _=_ : Qid Expression -> Assig [ctor] .
+    op _=[_] : Qid Array -> Assig [ctor] .
 
     var Q : Qid .
     var E : Expression .
     var M : Memory .
+    var A : Array .
+    var T : Type .
+    var N : Nat .
 
     op assigInMemory : Assig Memory -> Memory .
     eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
+
+    op assigInMemory : Assig Memory Nat -> Memory .
+    eq assigInMemory(Q = [T A], M, N) = (M [qid(string(Q) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(Q = [A], M, s(N)) .
+    eq assigInMemory(Q = [arrayEmpty], M, N) = M .
 
 endfm

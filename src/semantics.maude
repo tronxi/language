@@ -14,6 +14,7 @@ mod SEMANTICS is
     var P PBody PBodyElse : Program .
     var C : Condition .
     var A A' : Assig .
+    var Array : Array .
     
     rl [coment] :
         { // PBody P | M}
@@ -29,6 +30,11 @@ mod SEMANTICS is
         { (Q = E); P | M}
         =>
         { P | assigInMemory(Q = E, M) } .
+    
+    rl [assigArray] :
+        { (Q = [Array]); P | M}
+        =>
+        { P | assigInMemory(Q = [Array], M, 0)} .
 
     crl [ifTrue] :
         { if(C){PBody} P | M }
