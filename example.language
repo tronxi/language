@@ -1,6 +1,5 @@
 ('var1 = 9);
 ('var2 = 'var1 sum 3);
-('arr = [1 2 3]);
 ('test = 'arr<1>);
 //('otravar = 'var1);
 print('var1);
@@ -17,7 +16,13 @@ while('centinela gt 0) {
 ('counter = 0);
 for(('i = 0 ); ('i lt 10); ('i = 'i sum 1);) {
     ('counter = 'counter sum 1);
-} 
+}
+('sumTotal = 0);
+('arr = [1 2 3]);
+//('arr < 4 > = 4);
+for(('i = 0 ); ('i lt 10); ('i = 'i sum 1);) {
+    ('sumTotal = ('arr < 'i >) sum 'sumTotal);
+}
 ('con1 = 1);
 ('con2 = 2);
 ('con3 = 2);

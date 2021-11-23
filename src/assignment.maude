@@ -10,8 +10,8 @@ fmod ASSIGNMENT is
 
     sort Assig .
 
-    op _=_ : Qid Expression -> Assig [ctor] .
-    op _=[_] : Qid Array -> Assig [ctor] .
+    op _=_ : Type Expression -> Assig [ctor] .
+    op _=[_] : Type Array -> Assig [ctor] .
 
     var Q : Qid .
     var E : Expression .
@@ -24,7 +24,7 @@ fmod ASSIGNMENT is
     eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
 
     op assigInMemory : Assig Memory Nat -> Memory .
-    eq assigInMemory(Q = [T A], M, N) = (M [qid(string(Q) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(Q = [A], M, s(N)) .
+    eq assigInMemory(Q = [T A], M, N) = (M [qid(string(Q) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(Q = [A], none, s(N)).
     eq assigInMemory(Q = [arrayEmpty], M, N) = M .
 
 endfm
