@@ -9,11 +9,13 @@ mod SEMANTICS is
     op {_|_} : Program Memory -> System [ctor] .
 
     var M : Memory .
-    var Q Q' : Qid .
+    var Q : Qid .
+    vars T T' : Type .
     var E : Expression .
     var P PBody PBodyElse : Program .
     var C : Condition .
     var A A' : Assig .
+    var Array : Array .
     
     rl [coment] :
         { // PBody P | M}
@@ -24,11 +26,26 @@ mod SEMANTICS is
         { print(Q); P | M}
         => 
         { P | M} .
+
+    rl [assigInMatrix] : 
+        { ((Q < T > < T' >) = E); P | M}
+        =>
+        { P | assigInMemoryMatrix(Q, T, T', E, M) } .
+    
+    rl [assigSize] : 
+        { (T = size(Q)); P | M}
+        =>
+        { P | assigInMemory(T = size(M, Q, 0), M) } .
     
     rl [assig] : 
-        { (Q = E); P | M}
+        { (T = E); P | M}
         =>
-        { P | assigInMemory(Q = E, M) } .
+        { P | assigInMemory(T = E, M) } .
+    
+    rl [assigArray] :
+        { (T = [Array]); P | M}
+        =>
+        { P | assigInMemory(T = [Array], M, 0)} .
 
     crl [ifTrue] :
         { if(C){PBody} P | M }

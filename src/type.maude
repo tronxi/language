@@ -2,15 +2,28 @@ load memory .
 fmod TYPE is
 
     pr MEMORY .
-    sort Type .
+    pr CONVERSION .
+    sorts Type Index .
 
-    subsorts Qid Int < Type .
+    subsorts Qid Int Index < Type .
+
+    op _<_> : Type Type -> Index [ctor] .
 
     var Q : Qid .
     var M : Memory .
-    var V : Int .
+    var I : Int .
+    var In : Index .
+    vars T T' : Type .
+
+    op toQid : Index Memory -> Qid .
+    eq toQid(Q < T >, M) = qid(string(Q) + "<" + string(load(M, T), 10) + ">") .
+
+    op toQid : Qid Type Type Memory -> Qid .
+    eq toQid(Q, T, T', M) = qid(string(Q) + "<" + string(load(M,T), 10) + "><" + string(load(M, T'), 10) + ">") .
+
     op load : Memory Type -> Type .
     eq load(M, Q) = find(M, Q) .
-    eq load(M, V) = V .
+    eq load(M, I) = I .
+    eq load(M, In) = find(M, toQid(In, M)) .
 
 endfm

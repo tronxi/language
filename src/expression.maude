@@ -13,12 +13,13 @@ fmod EXPRESSION is
     
     vars T T' : Type .
     var M : Memory .
-    
+    var Q : Qid .
+
     op eval : Expression Memory -> Type .
     eq eval (T sum T', M) = load(M,T) + load(M,T') .
     eq eval (T less T', M) = load(M,T) - load(M,T') .
     eq eval (T mult T', M) = load(M,T) * load(M,T') .
-    eq eval (T, M) = T [owise].
-
+    eq eval (Q < T > < T' > , M) = load(M, toQid(Q, T, T', M)) .
+    eq eval (T, M) = load(M, T) [owise] .
 
 endfm

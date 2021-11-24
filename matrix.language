@@ -1,0 +1,14 @@
+('matrixCounter = 0);
+for(('i = 0 ); ('i lte 3); ('i = 'i sum 1);) {
+    for(('j = 0 ); ('j lte 4); ('j = 'j sum 1);) {
+        ('matrixCounter = 'matrixCounter sum 1);
+        (('aa < 'i > < 'j >) = 'matrixCounter);
+    }
+}
+
+for(('i = 0 ); ('i lte 3); ('i = 'i sum 1);) {
+    for(('j = 0 ); ('j lte 4); ('j = 'j sum 1);) {
+        ('value = 'aa < 'i > < 'j >);
+        (('double < 'i > < 'j >) = 'value mult 2);
+    }
+}

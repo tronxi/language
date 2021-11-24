@@ -9,8 +9,9 @@ fmod MEMORY is
     op __ : Memory Memory -> Memory [ctor assoc comm id: none] .
 
     vars M M' : Memory .
-    var Q : Qid .
+    vars Q Q' : Qid .
     vars V V' : Int .
+    var N : Nat .
 
     op _ [_\_] : Memory Qid Int -> Memory .
     eq ( M [ Q , V ]) [ Q \ V' ] = [ Q , V' ] M .
@@ -19,5 +20,16 @@ fmod MEMORY is
     op find : Memory Qid -> Int .
     eq find (M [Q, V] M', Q) = V .
     eq find (M, Q) = 0 [owise] .
+
+    op match : Qid Qid -> Bool .
+    eq match(Q, Q') = substr(string(Q'), 0, length(string(Q) + "<")) == substr(string(Q) + "<", 0, length(string(Q)) + 1) .
+
+    op size : Memory Qid Nat -> Nat .
+    eq size(none, Q, N) = N .
+    eq size([Q', V] M , Q, N) =
+        if match(Q, Q') == true
+        then size(M, Q, s(N))
+        else size (M, Q, N)
+        fi .
 
 endfm

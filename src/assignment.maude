@@ -1,19 +1,37 @@
 load expression .
+load array .
 fmod ASSIGNMENT is 
 
     pr TYPE .
     pr MEMORY .
     pr EXPRESSION .
+    pr ARRAY .
+    pr CONVERSION .
 
     sort Assig .
 
-    op _=_ : Qid Expression -> Assig .
+    op _=_ : Type Expression -> Assig [ctor] .
+    op _=[_] : Type Array -> Assig [ctor] .
+    op _= size(_) : Type Qid -> Assig [ctor] .
 
     var Q : Qid .
     var E : Expression .
     var M : Memory .
+    var A : Array .
+    vars T T' : Type .
+    var In : Index .
+    var N : Nat .
 
     op assigInMemory : Assig Memory -> Memory .
     eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
+    eq assigInMemory(In = E, M) = M [toQid(In, M) \ load(M, eval(E, M))] .
+
+    op assigInMemoryMatrix : Qid Type Type Expression Memory -> Memory .
+    eq assigInMemoryMatrix(Q, T, T', E, M) = M [toQid(Q, T, T', M) \ load(M, eval(E, M))] .
+
+    op assigInMemory : Assig Memory Nat -> Memory .
+    eq assigInMemory(Q = [T A], M, N) = (M [qid(string(Q) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(Q = [A], none, s(N)) .
+    eq assigInMemory(In = [T A], M, N) = (M [qid(string(toQid(In, M)) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(toQid(In, M) = [A], none, s(N)) .
+    eq assigInMemory(T = [arrayEmpty], M, N) = M [owise] .
 
 endfm
