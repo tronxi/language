@@ -6,7 +6,7 @@ fmod SYNTAX is
     pr ASSIGNMENT .
 
     sort Program .
-    op skip : -> Program [ctor] .
+    op end : -> Program [ctor] .
     op //_ : Program -> Program [ctor] .
     op (_); : Assig -> Program [ctor] .
     op print(_); : Qid -> Program [ctor] .
@@ -15,6 +15,6 @@ fmod SYNTAX is
     op while(_) {_} : Condition Program -> Program [ctor] .
     op for((_);(_);(_);) {_} : Assig Condition Assig Program -> Program [ctor] .
     op forWithoutInitial((_);(_);) {_} : Condition Assig Program -> Program [ctor] .
-    op __ : Program Program -> Program [ctor assoc id: skip] .
+    op __ : Program Program -> Program [ctor assoc id: end] .
     
 endfm

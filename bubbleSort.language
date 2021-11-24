@@ -1,0 +1,14 @@
+('v = [1 23 14 90 45 50 32 100 -1 28]);
+('n = size('v));
+
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
+    ('limitForJ = 'n less 'i);
+    for(('j = 1); ('j lt 'limitForJ); ('j = 'j sum 1);) {
+        ('ant = 'j less 1);
+        if('v < 'ant > gt 'v < 'j >) {
+            ('tmp = 'v < 'ant >);
+            ('v < 'ant > = 'v < 'j > );
+            ('v < 'j > = 'tmp);
+        }
+    }
+}

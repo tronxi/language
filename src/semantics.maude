@@ -32,6 +32,11 @@ mod SEMANTICS is
         =>
         { P | assigInMemoryMatrix(Q, T, T', E, M) } .
     
+    rl [assigSize] : 
+        { (T = size(Q)); P | M}
+        =>
+        { P | assigInMemory(T = size(M, Q, 0), M) } .
+    
     rl [assig] : 
         { (T = E); P | M}
         =>
