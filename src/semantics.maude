@@ -10,7 +10,7 @@ mod SEMANTICS is
 
     var M : Memory .
     var Q : Qid .
-    var T : Type .
+    vars T T' : Type .
     var E : Expression .
     var P PBody PBodyElse : Program .
     var C : Condition .
@@ -26,6 +26,11 @@ mod SEMANTICS is
         { print(Q); P | M}
         => 
         { P | M} .
+
+    rl [assigInMatrix] : 
+        { ((Q < T > < T' >) = E); P | M}
+        =>
+        { P | assigInMemoryMatrix(Q, T, T', E, M) } .
     
     rl [assig] : 
         { (T = E); P | M}

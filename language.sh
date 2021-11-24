@@ -1,1 +1,1 @@
-python3 compiler/generator.py example.language
+python3 compiler/generator.py $1

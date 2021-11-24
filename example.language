@@ -25,17 +25,13 @@ for(('i = 0 ); ('i lte 3); ('i = 'i sum 1);) {
     ('doble < 'i > = ('arr < 'i >) mult 2);
 }
 if(('arr < 2 > eq 3) && 'arr < 1 > lte 2) {
-    ('good = 2);
+    ('good = 12);
 }
+('f = 1);
+('c = 2);
 ('con1 = 1);
 ('con2 = 2);
 ('con3 = 2);
 if((('con1 eq 1) && 'con2 eq 2) || 'con3 eq 3) {
     ('con4 = 4);
-}
-
-for(('i = 0); ('i lte 5); ('i = 'i sum 1);) {
-    for(('j = 0); ('j lte 5); ('j = 'j sum 1);) {
-        (('row < 'i > ) = 2 );
-    }
 }

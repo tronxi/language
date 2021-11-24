@@ -13,10 +13,13 @@ fmod TYPE is
     var M : Memory .
     var I : Int .
     var In : Index .
-    var T : Type .
+    vars T T' : Type .
 
     op toQid : Index Memory -> Qid .
     eq toQid(Q < T >, M) = qid(string(Q) + "<" + string(load(M, T), 10) + ">") .
+
+    op toQid : Qid Type Type Memory -> Qid .
+    eq toQid(Q, T, T', M) = qid(string(Q) + "<" + string(load(M,T), 10) + "><" + string(load(M, T'), 10) + ">") .
 
     op load : Memory Type -> Type .
     eq load(M, Q) = find(M, Q) .
@@ -24,6 +27,3 @@ fmod TYPE is
     eq load(M, In) = find(M, toQid(In, M)) .
 
 endfm
-
---- red 'a < 1 > .
---- q

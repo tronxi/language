@@ -7,7 +7,6 @@ fmod ARRAY is
     subsort Type < Array .
 
     op arrayEmpty : -> Array [ctor] .
-    op [-] : -> Array [ctor] .
     op __ : Array Array -> Array [ctor assoc id: arrayEmpty] .
 
 endfm
