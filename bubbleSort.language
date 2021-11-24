@@ -2,8 +2,7 @@
 ('n = size('v));
 
 for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
-    ('limitForJ = 'n less 'i);
-    for(('j = 1); ('j lt 'limitForJ); ('j = 'j sum 1);) {
+    for(('j = 1); ('j lt ('n less 'i)); ('j = 'j sum 1);) {
         ('ant = 'j less 1);
         if('v < 'ant > gt 'v < 'j >) {
             ('tmp = 'v < 'ant >);

@@ -3,7 +3,7 @@
 ('test = 'arr<1>);
 //('otravar = 'var1);
 print('var1);
-if(9 gt 'var2) {
+if(9 gt 'var1 less 1) {
    ('var3 = 3);
 } else {
     ('var4 = 4 sum 'var1);

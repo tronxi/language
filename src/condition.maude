@@ -1,33 +1,33 @@
-load type .
+load expression .
 fmod CONDITION is
 
     pr MEMORY .
-    pr TYPE .
+    pr EXPRESSION .
 
     sorts Condition MultipleCondition .
     subsort MultipleCondition < Condition .
 
-    op _eq_ : Type Type -> Condition [ctor] .
-    op _neq_ : Type Type -> Condition [ctor] .
-    op _gt_ : Type Type -> Condition [ctor] .
-    op _gte_ : Type Type -> Condition [ctor] .
-    op _lt_ : Type Type -> Condition [ctor] .
-    op _lte_ : Type Type -> Condition [ctor] .
+    op _eq_ : Expression Expression -> Condition [ctor] .
+    op _neq_ : Expression Expression -> Condition [ctor] .
+    op _gt_ : Expression Expression -> Condition [ctor] .
+    op _gte_ : Expression Expression -> Condition [ctor] .
+    op _lt_ : Expression Expression -> Condition [ctor] .
+    op _lte_ : Expression Expression -> Condition [ctor] .
 
     op _&&_ : Condition Condition -> MultipleCondition [ctor assoc comm] .
     op _||_ : Condition Condition -> MultipleCondition [ctor assoc comm] .
 
-    var T T' : Type .
+    var E E' : Expression .
     var M : Memory .
     var C C' : Condition .
 
     op eval : Condition Memory -> Bool .
-    eq eval(T eq T', M) = load(M, T) == load(M, T') .
-    eq eval(T neq T', M) = load(M, T) =/= load(M, T') .
-    eq eval(T gt T', M) = load(M, T) > load(M, T') .
-    eq eval(T gte T', M) = load(M, T) >= load(M, T') .
-    eq eval(T lt T', M) = load(M, T) < load(M, T') .
-    eq eval(T lte T', M) = load(M, T) <= load(M, T') .
+    eq eval(E eq E', M) = load(M, eval(E, M)) == load(M, eval(E', M)) .
+    eq eval(E neq E', M) = load(M, eval(E, M)) =/= load(M, eval(E', M)) .
+    eq eval(E gt E', M) = load(M, eval(E, M)) > load(M, eval(E', M)) .
+    eq eval(E gte E', M) = load(M, eval(E, M)) >= load(M, eval(E', M)) .
+    eq eval(E lt E', M) = load(M, eval(E, M)) < load(M, eval(E', M)) .
+    eq eval(E lte E', M) = load(M, eval(E, M)) <= load(M, eval(E', M)) .
     eq eval(C && C', M) = eval(C, M) and eval(C', M) .
     eq eval(C || C', M) = eval(C, M) or eval(C', M) .
 
