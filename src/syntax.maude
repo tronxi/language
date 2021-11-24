@@ -18,6 +18,3 @@ fmod SYNTAX is
     op __ : Program Program -> Program [ctor assoc id: skip] .
     
 endfm
-
---- red ('arr = [1 2 3]); .
---- q

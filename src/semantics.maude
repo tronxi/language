@@ -9,7 +9,8 @@ mod SEMANTICS is
     op {_|_} : Program Memory -> System [ctor] .
 
     var M : Memory .
-    var Q Q' : Qid .
+    var Q : Qid .
+    var T : Type .
     var E : Expression .
     var P PBody PBodyElse : Program .
     var C : Condition .
@@ -27,14 +28,14 @@ mod SEMANTICS is
         { P | M} .
     
     rl [assig] : 
-        { (Q = E); P | M}
+        { (T = E); P | M}
         =>
-        { P | assigInMemory(Q = E, M) } .
+        { P | assigInMemory(T = E, M) } .
     
     rl [assigArray] :
-        { (Q = [Array]); P | M}
+        { (T = [Array]); P | M}
         =>
-        { P | assigInMemory(Q = [Array], M, 0)} .
+        { P | assigInMemory(T = [Array], M, 0)} .
 
     crl [ifTrue] :
         { if(C){PBody} P | M }

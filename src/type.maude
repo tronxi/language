@@ -7,7 +7,7 @@ fmod TYPE is
 
     subsorts Qid Int Index < Type .
 
-    op _<_> : Qid Type -> Index [ctor] .
+    op _<_> : Type Type -> Index [ctor] .
 
     var Q : Qid .
     var M : Memory .

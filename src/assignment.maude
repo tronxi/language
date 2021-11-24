@@ -18,13 +18,17 @@ fmod ASSIGNMENT is
     var M : Memory .
     var A : Array .
     var T : Type .
+    var In : Index .
     var N : Nat .
 
     op assigInMemory : Assig Memory -> Memory .
     eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
+    eq assigInMemory(In = E, M) = M [toQid(In, M) \ load(M, eval(E, M))] .
 
     op assigInMemory : Assig Memory Nat -> Memory .
     eq assigInMemory(Q = [T A], M, N) = (M [qid(string(Q) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(Q = [A], none, s(N)).
     eq assigInMemory(Q = [arrayEmpty], M, N) = M .
+    eq assigInMemory(In = [T A], M, N) = (M [qid(string(toQid(In, M)) + "<" + string(N, 10) + ">") \ load(M, T)]) assigInMemory(toQid(In, M) = [A], none, s(N)).
+    eq assigInMemory(In = [arrayEmpty], M, N) = M .
 
 endfm
