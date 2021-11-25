@@ -10,5 +10,5 @@ mod IO is
     eq print(S, O) = write(stdout, O, S) .
 
     op println : String Oid -> Msg .
-    eq println(S, O) = write(stdout, O, S + "\n") .
+    eq println(S, O) = print(S + "\n", O) .
 endm
