@@ -9,7 +9,10 @@ fmod SYNTAX is
     op end : -> Program [ctor] .
     op //_ : Program -> Program [ctor] .
     op (_); : Assig -> Program [ctor] .
-    op print(_); : Qid -> Program [ctor] .
+    op print(_); : Type -> Program [ctor] .
+    op println(_); : Type -> Program [ctor] .
+    op print(_); : String -> Program [ctor] .
+    op println(_); : String -> Program [ctor] .
     op if(_) {_} : Condition Program -> Program [ctor] .
     op if(_) {_} else {_} : Condition Program Program -> Program [ctor] .
     op while(_) {_} : Condition Program -> Program [ctor] .

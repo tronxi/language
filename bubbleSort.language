@@ -1,6 +1,12 @@
 ('v = [1 23 14 90 45 50 32 100 -1 28]);
 ('n = size('v));
 
+print("Desordenado: ");
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
+    print('v < 'i >);
+    print(" ");
+}
+
 for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
     for(('j = 1); ('j lt ('n less 'i)); ('j = 'j sum 1);) {
         ('ant = 'j less 1);
@@ -10,4 +16,10 @@ for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
             ('v < 'j > = 'tmp);
         }
     }
+}
+println("");
+print("Ordenado: ");
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
+    print('v < 'i >);
+    print(" ");
 }

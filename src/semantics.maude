@@ -1,12 +1,16 @@
 load syntax .
+load io .
 
 mod SEMANTICS is
     pr SYNTAX .
     pr TYPE .
-    
-    sort System .
+    pr IO .
 
+    sort System .
+    subsort System < Attribute .
     op {_|_} : Program Memory -> System [ctor] .
+    op myClass : -> Cid . 
+    op myObj : -> Oid . 
 
     var M : Memory .
     var Q : Qid .
@@ -16,16 +20,32 @@ mod SEMANTICS is
     var C : Condition .
     var A A' : Assig .
     var Array : Array .
+    var S : String .
     
     rl [coment] :
-        { // PBody P | M}
+       { // PBody P | M}
         =>
         { P | M} .
 
-    rl [print] :
-        { print(Q); P | M}
+    rl [printType] :
+        < myObj : myClass | { print(T); P | M} >
         => 
-        { P | M} .
+        < myObj : myClass |{ P | M} > print(string(load(M, T), 10), myObj) .
+
+    rl [printlnType] :
+        < myObj : myClass | { println(T); P | M} >
+        => 
+        < myObj : myClass |{ P | M} > println(string(load(M, T), 10), myObj) .
+    
+    rl [printString] :
+        < myObj : myClass | { print(S); P | M} >
+        => 
+       print(S, myObj) < myObj : myClass |{ P | M } > .
+
+    rl [printlnString] :
+        < myObj : myClass | { println(S); P | M} >
+        => 
+       println(S, myObj) < myObj : myClass |{ P | M } > .
 
     rl [assigInMatrix] : 
         { ((Q < T > < T' >) = E); P | M}
