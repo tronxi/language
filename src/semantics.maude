@@ -9,8 +9,9 @@ mod SEMANTICS is
     sort System .
     subsort System < Attribute .
     op {_|_} : Program Memory -> System [ctor] .
-    op myClass : -> Cid . 
-    op myObj : -> Oid . 
+
+    op System : -> Cid . 
+    op sistem : -> Oid . 
 
     var M : Memory .
     var Q : Qid .
@@ -28,24 +29,24 @@ mod SEMANTICS is
         { P | M} .
 
     rl [printType] :
-        < myObj : myClass | { print(T); P | M} >
+        < sistem : System | { print(T); P | M} >
         => 
-        < myObj : myClass |{ P | M} > print(string(load(M, T), 10), myObj) .
+        < sistem : System |{ P | M} > print(string(load(M, T), 10), sistem) .
 
     rl [printlnType] :
-        < myObj : myClass | { println(T); P | M} >
+        < sistem : System | { println(T); P | M} >
         => 
-        < myObj : myClass |{ P | M} > println(string(load(M, T), 10), myObj) .
+        < sistem : System |{ P | M} > println(string(load(M, T), 10), sistem) .
     
     rl [printString] :
-        < myObj : myClass | { print(S); P | M} >
+        < sistem : System | { print(S); P | M} >
         => 
-       print(S, myObj) < myObj : myClass |{ P | M } > .
+       print(S, sistem) < sistem : System |{ P | M } > .
 
     rl [printlnString] :
-        < myObj : myClass | { println(S); P | M} >
+        < sistem : System | { println(S); P | M} >
         => 
-       println(S, myObj) < myObj : myClass |{ P | M } > .
+       println(S, sistem) < sistem : System |{ P | M } > .
 
     rl [assigInMatrix] : 
         { ((Q < T > < T' >) = E); P | M}
