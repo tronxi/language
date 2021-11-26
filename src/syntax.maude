@@ -13,6 +13,8 @@ fmod SYNTAX is
     op println(_); : Type -> Program [ctor] .
     op print(_); : String -> Program [ctor] .
     op println(_); : String -> Program [ctor] .
+    op scanf(_,_); : Type String -> Program [ctor] .
+    op (_=futureRead); : Type -> Program [ctor] . 
     op if(_) {_} : Condition Program -> Program [ctor] .
     op if(_) {_} else {_} : Condition Program Program -> Program [ctor] .
     op while(_) {_} : Condition Program -> Program [ctor] .

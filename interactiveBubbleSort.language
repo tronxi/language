@@ -1,0 +1,28 @@
+scanf('n, "Introduce la longitud del vector: ");
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
+    scanf('v < 'i > , "Introduce un numero: ");
+}
+
+print("Desordenado: ");
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
+    print('v < 'i >);
+    print(" ");
+}
+
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
+    for(('j = 1); ('j lt ('n less 'i)); ('j = 'j sum 1);) {
+        ('ant = 'j less 1);
+        if('v < 'ant > gt 'v < 'j >) {
+            ('tmp = 'v < 'ant >);
+            ('v < 'ant > = 'v < 'j > );
+            ('v < 'j > = 'tmp);
+        }
+    }
+}
+
+println("");
+print("Ordenado: ");
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
+    print('v < 'i >);
+    print(" ");
+}

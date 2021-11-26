@@ -5,6 +5,7 @@ mod SEMANTICS is
     pr SYNTAX .
     pr TYPE .
     pr IO .
+    pr CONVERSION .
 
     sort System .
     subsort System < Attribute .
@@ -21,7 +22,9 @@ mod SEMANTICS is
     var C : Condition .
     var A A' : Assig .
     var Array : Array .
-    var S : String .
+    var S S' : String .
+    var O : Oid .
+    var Length Length' : Int .
     
     rl [coment] :
        { // PBody P | M}
@@ -47,6 +50,20 @@ mod SEMANTICS is
         < sistem : System | { println(S); P | M} >
         => 
        println(S, sistem) < sistem : System |{ P | M } > .
+    
+    rl [startRead] :
+        < sistem : System | { scanf(T, S); P | M } >
+        =>
+        startWrite(S, sistem) < sistem : System | { (T =futureRead); P | M } > .
+
+    crl [endRead] :
+        < sistem : System | { (T =futureRead); P | M } > gotLine (sistem, O, S)
+        =>
+        < sistem : System | { P | assigInMemory(T = T', M) } > 
+        if S =/= "" 
+        /\ Length := length(S)
+        /\ Length' := sd(Length, 1)
+        /\ T' := rat(substr(S, 0, Length'), 10) .
 
     rl [assigInMatrix] : 
         { ((Q < T > < T' >) = E); P | M}
