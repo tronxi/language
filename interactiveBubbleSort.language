@@ -1,5 +1,7 @@
-('v = [1 23 14 90 45 50 32 100 -1 28 42]);
-('n = size('v));
+scanf('n, "Introduce la longitud del vector: ");
+for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
+    scanf('v < 'i > , "Introduce un numero: ");
+}
 
 print("Desordenado: ");
 for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {

@@ -8,5 +8,5 @@ mod TEST is
 
 endm
 
-rew { program | none } .
+erew < sistem : System | { println(""); println(""); program println(""); println(""); | none } > .
 q

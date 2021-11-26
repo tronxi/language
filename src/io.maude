@@ -1,0 +1,18 @@
+load file .
+mod IO is
+    pr STRING .
+    including STD-STREAM . 
+
+    var S : String .
+    var O : Oid .
+
+    op print : String Oid -> Msg .
+    eq print(S, O) = write(stdout, O, S) .
+
+    op println : String Oid -> Msg .
+    eq println(S, O) = print(S + "\n", O) .
+
+    op startWrite : String Oid -> Msg .
+    eq startWrite(S, O) = getLine (stdin, O, S) .
+
+endm

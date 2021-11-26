@@ -1,34 +1,96 @@
 load syntax .
+load io .
 
 mod SEMANTICS is
     pr SYNTAX .
     pr TYPE .
-    
-    sort System .
+    pr IO .
+    pr CONVERSION .
 
+    sort System .
+    subsort System < Attribute .
     op {_|_} : Program Memory -> System [ctor] .
+
+    op System : -> Cid . 
+    op sistem : -> Oid . 
 
     var M : Memory .
     var Q : Qid .
-    vars T T' : Type .
+    vars T T' T'' : Type .
     var E : Expression .
     var P PBody PBodyElse : Program .
     var C : Condition .
     var A A' : Assig .
     var Array : Array .
+    var S S' : String .
+    var O : Oid .
+    var Length Length' : Int .
     
     rl [coment] :
-        { // PBody P | M}
+       { // PBody P | M}
         =>
         { P | M} .
 
-    rl [print] :
-        { print(Q); P | M}
+    rl [printType] :
+        < sistem : System | { print(T); P | M} >
         => 
-        { P | M} .
+        < sistem : System |{ P | M} > print(string(load(M, T), 10), sistem) .
+    
+    rl [printTypeMatrix] :
+        < sistem : System | { print([ Q < T > < T' >]); P | M} >
+        => 
+        < sistem : System |{ P | M} > print(string(load(M, toQid(Q, T, T', M)), 10), sistem) .
+
+    rl [printlnType] :
+        < sistem : System | { println(T); P | M} >
+        => 
+        < sistem : System |{ P | M} > println(string(load(M, T), 10), sistem) .
+
+    rl [printlnTypeMatrix] :
+        < sistem : System | { println([ Q < T > < T' >]); P | M} >
+        => 
+        < sistem : System |{ P | M} > println(string(load(M, toQid(Q, T, T', M)), 10), sistem) .
+    
+    rl [printString] :
+        < sistem : System | { print(S); P | M} >
+        => 
+       print(S, sistem) < sistem : System |{ P | M } > .
+
+    rl [printlnString] :
+        < sistem : System | { println(S); P | M} >
+        => 
+       println(S, sistem) < sistem : System |{ P | M } > .
+    
+    rl [startScanf] :
+        < sistem : System | { scanf(T, S); P | M } >
+        =>
+        startWrite(S, sistem) < sistem : System | { (T =futureRead); P | M } > .
+
+    crl [endScanf] :
+        < sistem : System | { (T =futureRead); P | M } > gotLine (sistem, O, S)
+        =>
+        < sistem : System | { P | assigInMemory(T = T', M) } > 
+        if S =/= "" 
+        /\ Length := length(S)
+        /\ Length' := sd(Length, 1)
+        /\ T' := rat(substr(S, 0, Length'), 10) .
+
+    rl [startScanfInMatrix] :
+        < sistem : System | { scanf([ Q < T > < T' >], S); P | M } >
+        =>
+        startWrite(S, sistem) < sistem : System | { ([ Q < T > < T' >] =futureRead); P | M } > .
+
+    crl [endScanfInMatrix] :
+        < sistem : System | { ([ Q < T > < T' >] =futureRead); P | M } > gotLine (sistem, O, S)
+        =>
+        < sistem : System | { P | assigInMemoryMatrix(Q, T, T', T'', M) } > 
+        if S =/= "" 
+        /\ Length := length(S)
+        /\ Length' := sd(Length, 1)
+        /\ T'' := rat(substr(S, 0, Length'), 10) .
 
     rl [assigInMatrix] : 
-        { ((Q < T > < T' >) = E); P | M}
+        { ([ Q < T > < T' >]= E); P | M}
         =>
         { P | assigInMemoryMatrix(Q, T, T', E, M) } .
     

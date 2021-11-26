@@ -1,8 +1,6 @@
-('matrixCounter = 0);
 for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
     for(('j = 0 ); ('j lte 1); ('j = 'j sum 1);) {
-        ('matrixCounter = 'matrixCounter sum 1);
-        (['aa < 'i > < 'j >] = 'matrixCounter);
+        scanf(['aa < 'i > < 'j >], "Introduce un numero: ");
     }
 }
 for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
@@ -13,4 +11,3 @@ for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
     }
     println("");
 }
-
