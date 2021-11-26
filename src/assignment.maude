@@ -9,8 +9,9 @@ fmod ASSIGNMENT is
     pr CONVERSION .
 
     sort Assig .
-
+ 
     op _=_ : Type Expression -> Assig [ctor] .
+    op [ _ < _ > < _ > ] = _ : Qid Type Type Expression -> Assig [ctor] .
     op _=[_] : Type Array -> Assig [ctor] .
     op _= size(_) : Type Qid -> Assig [ctor] .
 
