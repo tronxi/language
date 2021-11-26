@@ -13,6 +13,6 @@ mod IO is
     eq println(S, O) = print(S + "\n", O) .
 
     op startWrite : String Oid -> Msg .
-    eq startWrite(S, O) = getLine (stdin, O, S) .        
+    eq startWrite(S, O) = getLine (stdin, O, S) .
 
 endm
