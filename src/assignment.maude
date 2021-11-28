@@ -1,5 +1,3 @@
-load expression .
-load array .
 fmod ASSIGNMENT is 
 
     pr TYPE .

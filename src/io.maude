@@ -1,4 +1,3 @@
-load file .
 mod IO is
     pr STRING .
     including STD-STREAM . 

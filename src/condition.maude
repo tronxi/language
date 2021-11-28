@@ -1,4 +1,3 @@
-load expression .
 fmod CONDITION is
 
     pr MEMORY .

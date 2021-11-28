@@ -1,6 +1,3 @@
-load condition .
-load assignment .
-
 fmod SYNTAX is
     pr CONDITION .
     pr ASSIGNMENT .

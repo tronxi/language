@@ -1,6 +1,3 @@
-load syntax .
-load io .
-
 mod SEMANTICS is
     pr SYNTAX .
     pr TYPE .

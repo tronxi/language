@@ -1,0 +1,10 @@
+load memory .
+load type .
+load expression .
+load array .
+load assignment .
+load file .
+load io .
+load condition .
+load syntax .
+load semantics .
