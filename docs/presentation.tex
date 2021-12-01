@@ -1,0 +1,55 @@
+\documentclass{beamer}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[nodayofweek,level]{datetime}
+\usepackage{pgfpages}
+\usepackage{hyperref}
+\usepackage{minted}
+
+\newcommand{\mydate}{\formatdate{10}{12}{2021}}
+
+\usetheme{Madrid}
+\title{Semantica de lenguajes}
+\subtitle{Especificación de un lenguaje declarativo con maude}
+\author{Sergio García Sánchez}
+\institute{UCM}
+\date{\mydate}
+
+\BeforeBeginEnvironment{minted}{\medskip}
+\AfterEndEnvironment{minted}{\medskip}
+
+
+\begin{document}
+
+    \begin{frame}
+        \titlepage
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Indice}
+        \tableofcontents
+    \end{frame}
+
+
+    \section{section}
+    \begin{frame}{holi}
+        \begin{itemize}
+            \item hola
+            \item que tal estas
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}[fragile]{Motivación}
+        \begin{minted}[fontsize=\small]{haskell}
+crl [endScanf] :
+< sistem : System | { (T =futureRead); P | M } > 
+gotLine (sistem, O, S)
+=>
+< sistem : System | { P | assigInMemory(T = T', M) } > 
+if S =/= "" 
+/\ Length := length(S)
+/\ Length' := sd(Length, 1)
+/\ T' := rat(substr(S, 0, Length'), 10) .
+        \end{minted}
+      \end{frame}
+\end{document}
