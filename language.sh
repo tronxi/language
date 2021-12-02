@@ -1,1 +1,1 @@
-python3 compiler/generator.py $1
+python3 execute.py $1

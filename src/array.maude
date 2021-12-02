@@ -1,4 +1,4 @@
-fmod ARRAY is 
+fmod ARRAYL is 
     pr TYPE .
 
     sort Array .

@@ -1,4 +1,3 @@
-compiler/generated.maude
 docs/**
 !docs/presentation.tex
 !docs/presentation.pdf

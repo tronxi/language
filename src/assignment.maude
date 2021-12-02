@@ -3,7 +3,7 @@ fmod ASSIGNMENT is
     pr TYPE .
     pr MEMORY .
     pr EXPRESSION .
-    pr ARRAY .
+    pr ARRAYL .
     pr CONVERSION .
 
     sort Assig .
