@@ -157,7 +157,6 @@ mod SEMANTICS is
         =>
         { PBody (A'); forWithoutInitial((C); (A'); ){PBody} P | M }
         if eval(C, M) .
- 
 
     crl [forFalse] :
         { forWithoutInitial((C); (A'); ){PBody} P | M }

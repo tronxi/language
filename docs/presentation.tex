@@ -9,7 +9,7 @@
 \newcommand{\mydate}{\formatdate{10}{12}{2021}}
 
 \usetheme{Madrid}
-\title{Semantica de lenguajes}
+\title{Semánticas de lenguajes}
 \subtitle{Especificación de un lenguaje declarativo con maude}
 \author{Sergio García Sánchez}
 \institute{UCM}
@@ -31,25 +31,330 @@
     \end{frame}
 
 
-    \section{section}
-    \begin{frame}{holi}
+    \section{Introducción}
+    \begin{frame}{Introducción}
         \begin{itemize}
-            \item hola
-            \item que tal estas
+            \item Definir la sintaxis de un lenguaje
+            \item Definir la semántica de un lenguaje mediante reglas de reescritura
+            \item Uso de la libreria de maude para python
         \end{itemize}
     \end{frame}
 
-    \begin{frame}[fragile]{Motivación}
+    \section{Sintaxis}
+    \begin{frame}[fragile]{Memoria}
         \begin{minted}[fontsize=\small]{haskell}
-crl [endScanf] :
-< sistem : System | { (T =futureRead); P | M } > 
-gotLine (sistem, O, S)
-=>
-< sistem : System | { P | assigInMemory(T = T', M) } > 
-if S =/= "" 
-/\ Length := length(S)
-/\ Length' := sd(Length, 1)
-/\ T' := rat(substr(S, 0, Length'), 10) .
+        sorts Pair Memory .
+        subsort Pair < Memory .
+    
+        op [_,_] : Qid Int -> Pair [ctor] .
+        op none : -> Memory [ctor] .
+        op __ : Memory Memory -> Memory [ctor assoc comm id: none] .
+
+        op _ [_\_] : Memory Qid Int -> Memory .
+        eq ( M [ Q , V ]) [ Q \ V' ] = [ Q , V' ] M .
+        eq M [ Q \ V ] = [ Q , V ] M  [owise] .
+        
+        op find : Memory Qid -> Int .
+        eq find (M [Q, V] M', Q) = V .
+        eq find (M, Q) = 0 [owise] .
         \end{minted}
-      \end{frame}
+    \end{frame}
+
+    \begin{frame}[fragile]{Tipos}
+        \begin{minted}[fontsize=\small]{haskell}
+        sorts Type Index .
+        subsorts Qid Int Index < Type .
+
+        op _<_> : Type Type -> Index [ctor] .
+
+        op load : Memory Type -> Type .
+        eq load(M, Q) = find(M, Q) .
+        eq load(M, I) = I .
+        eq load(M, In) = find(M, toQid(In, M)) .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Expresiones}
+        \begin{minted}[fontsize=\small]{haskell}
+sort Expression .
+subsort Type < Expression .
+        
+op _sum_ : Expression Expression -> Expression [ctor assoc comm] .
+op _less_ : Expression Expression -> Expression [ctor] .
+op _mult_ : Expression Expression -> Expression [ctor assoc comm] .
+
+op eval : Expression Memory -> Type .
+eq eval (T sum T', M) = load(M,T) + load(M,T') .
+eq eval (T less T', M) = load(M,T) - load(M,T') .
+eq eval (T mult T', M) = load(M,T) * load(M,T') .
+eq eval (T, M) = load(M, T) [owise] .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Condiciones}
+        \begin{minted}[fontsize=\small]{haskell}
+sorts Condition MultipleCondition .
+subsort MultipleCondition < Condition .
+        
+op _eq_ : Expression Expression -> Condition [ctor] .
+op _neq_ : Expression Expression -> Condition [ctor] .
+op _gt_ : Expression Expression -> Condition [ctor] .
+op _gte_ : Expression Expression -> Condition [ctor] .
+op _lt_ : Expression Expression -> Condition [ctor] .
+op _lte_ : Expression Expression -> Condition [ctor] .
+        
+op _&&_ : Condition Condition -> MultipleCondition [ctor assoc comm] .
+op _||_ : Condition Condition -> MultipleCondition [ctor assoc comm] .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Condiciones}
+        \begin{minted}[fontsize=\small]{haskell}
+op eval : Condition Memory -> Bool .
+eq eval(E eq E', M) = load(M, eval(E, M)) == load(M, eval(E', M)) .
+eq eval(E neq E', M) = load(M, eval(E, M)) =/= load(M, eval(E', M)) .
+eq eval(E gt E', M) = load(M, eval(E, M)) > load(M, eval(E', M)) .
+eq eval(E gte E', M) = load(M, eval(E, M)) >= load(M, eval(E', M)) .
+eq eval(E lt E', M) = load(M, eval(E, M)) < load(M, eval(E', M)) .
+eq eval(E lte E', M) = load(M, eval(E, M)) <= load(M, eval(E', M)) .
+            
+eq eval(C && C', M) = eval(C, M) and eval(C', M) .
+eq eval(C || C', M) = eval(C, M) or eval(C', M) .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Asignaciones}
+        \begin{minted}[fontsize=\small]{haskell}
+sort Assig .
+ 
+op _=_ : Type Expression -> Assig [ctor] .
+op [ _ < _ > < _ > ] = _ : Qid Type Type Expression -> Assig [ctor] .
+op _=[_] : Type Array -> Assig [ctor] .
+op _= size(_) : Type Qid -> Assig [ctor] .
+
+op assigInMemory : Assig Memory -> Memory .
+eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
+eq assigInMemory(In = E, M) = M [toQid(In, M) \ load(M, eval(E, M))] .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Sintaxis general}
+        \begin{minted}[fontsize=\small]{haskell}
+sort Program .
+op end : -> Program [ctor] .
+op //_ : Program -> Program [ctor] .
+op (_); : Assig -> Program [ctor] .
+op print(_); : Type -> Program [ctor] .
+op println(_); : Type -> Program [ctor] .
+op print(_); : String -> Program [ctor] .
+op println(_); : String -> Program [ctor] .
+op scanf(_,_); : Type String -> Program [ctor] .
+op (_=futureRead); : Type -> Program [ctor] .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Sintaxis general}
+        \begin{minted}[fontsize=\small]{haskell}  
+op if(_) {_} : Condition Program -> Program [ctor] .
+op if(_) {_} else {_} : Condition Program Program -> Program [ctor] .
+op while(_) {_} : Condition Program -> Program [ctor] .
+op do {_} while(_); : Program Condition -> Program [ctor] .
+op for((_);(_);(_);) {_} : Assig Condition Assig Program -> Program [ctor] .
+op forWithoutInitial((_);(_);) {_} : Condition Assig Program -> Program [ctor] .
+op __ : Program Program -> Program [ctor assoc id: end] .
+        \end{minted}
+    \end{frame}
+
+
+    \section{Semántica}
+    \begin{frame}[fragile]{Semántica}
+        \begin{minted}[fontsize=\small]{haskell}  
+            sort System .
+            subsort System < Attribute .
+            op {_|_} : Program Memory -> System [ctor] .
+
+            op System : -> Cid . 
+            op system : -> Oid . 
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Comentarios}
+        \begin{minted}[fontsize=\small]{haskell}  
+            rl [coment] :
+            { // PBody P | M}
+             =>
+             { P | M} .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Print}
+        \begin{minted}[fontsize=\small]{haskell}  
+rl [printType] :
+    < system : System | { print(T); P | M} >
+    => 
+    < system : System |{ P | M} > 
+    print(string(load(M, T), 10), system) .
+
+rl [printlnType] :
+    < system : System | { println(T); P | M} >
+    => 
+    < system : System |{ P | M} > 
+    println(string(load(M, T), 10), system) .
+
+rl [printString] :
+    < system : System | { print(S); P | M} >
+    => 
+    print(S, system) < system : System |{ P | M } > .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{IO}
+        \begin{minted}[fontsize=\small]{haskell}  
+            op print : String Oid -> Msg .
+            eq print(S, O) = write(stdout, O, S) .
+        
+            op println : String Oid -> Msg .
+            eq println(S, O) = print(S + "\n", O) .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Scanf}
+        \begin{minted}[fontsize=\small]{haskell}  
+rl [startScanf] :
+    < system : System | { scanf(T, S); P | M } >
+    =>
+    getLine (stdin, system, S) 
+    < system : System | { (T =futureRead); P | M } > .
+    
+crl [endScanf] :
+    < system : System | { (T =futureRead); P | M } > 
+    gotLine (system, O, S)
+    =>
+    < system : System | { P | assigInMemory(T = T', M) } > 
+    if S =/= "" 
+    /\ Length := length(S)
+    /\ Length' := sd(Length, 1)
+    /\ T' := rat(substr(S, 0, Length'), 10) .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Asignaciones}
+        \begin{minted}[fontsize=\small]{haskell}  
+        rl [assig] : 
+            { (T = E); P | M}
+            =>
+            { P | assigInMemory(T = E, M) } .
+
+        rl [assigSize] : 
+            { (T = size(Q)); P | M}
+            =>
+            { P | assigInMemory(T = size(M, Q, 0), M) } .
+        
+        rl [assigArray] :
+            { (T = [Array]); P | M}
+            =>
+            { P | assigInMemory(T = [Array], M, 0)} .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{If}
+        \begin{minted}[fontsize=\small]{haskell}  
+        crl [ifTrue] :
+            { if(C){PBody} P | M }
+            => 
+            { PBody P | M } 
+            if eval(C, M) .
+    
+        crl [ifFalse] :
+            { if(C){PBody} P | M }
+            => 
+            { P | M } 
+            if not eval(C, M) .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{If else}
+        \begin{minted}[fontsize=\small]{haskell}  
+        crl [ifElseTrue] :
+            { if(C){PBody}else{PBodyElse} P | M }
+            => 
+            { PBody P | M } 
+            if eval(C, M) .
+    
+        crl [ifElseFalse] :
+            { if(C){PBody}else{PBodyElse} P | M }
+            => 
+            { PBodyElse P | M } 
+            if not eval(C, M) .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{While}
+        \begin{minted}[fontsize=\small]{haskell}  
+    crl [whileTrue] :
+        { while(C){PBody} P | M }
+        => 
+        { PBody while(C){PBody} P | M } 
+        if eval(C, M) .
+
+    crl [whileFalse] :
+        { while(C){PBody} P | M }
+        => 
+        { P | M } 
+        if not eval(C, M) .
+
+    rl [doWhile] :
+        { do {PBody} while(C); P | M}
+        =>
+        {PBody while(C){PBody} P | M} .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{For}
+        \begin{minted}[fontsize=\small]{haskell}  
+    rl [initalFor] :
+        { for( (A); (C); (A'); ){PBody} P | M }
+        =>
+        { (A); forWithoutInitial((C); (A'); ){PBody} P | M } .
+    
+    crl [forTrue] :
+        { forWithoutInitial((C); (A'); ){PBody} P | M }
+        =>
+        { PBody (A'); forWithoutInitial((C); (A'); ){PBody} P | M }
+        if eval(C, M) .
+    
+    crl [forFalse] :
+        { forWithoutInitial((C); (A'); ){PBody} P | M }
+        =>
+        { P | M }
+        if not eval(C, M) .
+        \end{minted}
+    \end{frame}
+
+    \section{Ejecución}
+    \begin{frame}[fragile]{Ejecución}
+        \begin{minted}[fontsize=\small]{python}  
+import maude
+     
+def main(filename):
+    programFile = open(filename, "r").read()
+            
+    system = " < system : System |{ ${program} | none } > "
+    generatedSystem = system.replace("${program}", programFile)
+            
+    maude.init()
+    maude.load("src/loads.maude")
+    maude.getModule('SEMANTICS')
+        .parseTerm(generatedSystem)
+        .erewrite()
+        \end{minted}
+    \end{frame}
+    
+    \section{Ejemplos}
+    \begin{frame}{Ejemplos}
+    \end{frame}
+
+    \section{Conclusiones}
+    \begin{frame}{Conclusiones}
+    \end{frame}
 \end{document}
