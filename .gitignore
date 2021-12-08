@@ -2,3 +2,4 @@ docs/**
 !docs/presentation.tex
 !docs/presentation.pdf
 !docs/Makefile
+.DS_Store
