@@ -5,6 +5,7 @@
 \usepackage{pgfpages}
 \usepackage{hyperref}
 \usepackage{minted}
+\usepackage{hyperref}
 
 \newcommand{\mydate}{\formatdate{10}{12}{2021}}
 
@@ -36,9 +37,10 @@
     \begin{frame}{Introducción}
         \begin{itemize}
             \item Especificación formal de un lenguaje imperativo
-            \item Representar la sintaxis
-            \item Representar la semántica mediante reglas de reescritura
-            \item Ejecutar la especificación
+            \item Características del lenguaje
+            \item Representación de la sintaxis
+            \item Representación de la semántica mediante reglas de reescritura
+            \item Ejecución la especificación
         \end{itemize}
     \end{frame}
 
@@ -360,7 +362,7 @@ def main(filename):
     \end{frame}
     
     \section{Ejemplos}
-    \begin{frame}[fragile]{Ejemplos}
+    \begin{frame}[fragile]{Ejemplo - Bubble Sort}
         \begin{minted}[fontsize=\scriptsize]{haskell}  
             scanf('n, "Introduce la longitud del vector: ");
             for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
@@ -389,7 +391,7 @@ def main(filename):
         \end{minted}
     \end{frame}
 
-    \begin{frame}[fragile]{Bubble Sort}
+    \begin{frame}[fragile]{Ejemplo - Bubble Sort}
         \begin{figure}
             \includegraphics[width=\textwidth]{result.jpeg}
         \end{figure}
@@ -401,7 +403,22 @@ def main(filename):
         \begin{itemize}
             \item Facilidad para la especificación formal de un lenguaje
             \item Facilidad para ejecutar el lenguaje
+            \item Especificación de otros lenguajes de programación
             \item Verificación de propiedades
+        \end{itemize}
+    \end{frame}
+
+    \section{Bibliografía}
+    \begin{frame}{Bibliografía}
+        \begin{itemize}
+            \item Manual de maude \\
+                    \url{http://maude.lcc.uma.es/maude31-manual-html/maude-manual.html}
+            \item Maude como marco semántico ejecutable \\
+            Alberto Verdejo \\
+                    \url{http://maude.sip.ucm.es/alberto-verdejo/tesis/index.html}
+            \item Formal Analysis of Java Programs in JavaFAN \\
+            Azadeh FarzanFeng ChenJosé MeseguerGrigore Roşu \\
+                \url{https://link.springer.com/chapter/10.1007/978-3-540-27813-9_46}
         \end{itemize}
     \end{frame}
 \end{document}
