@@ -10,7 +10,7 @@
 
 \usetheme{Madrid}
 \title{Semánticas de lenguajes}
-\subtitle{Especificación de un lenguaje declarativo con maude}
+\subtitle{Especificación de un lenguaje imperativo con maude}
 \author{Sergio García Sánchez}
 \institute{UCM}
 \date{\mydate}
@@ -35,9 +35,10 @@
     \section{Introducción}
     \begin{frame}{Introducción}
         \begin{itemize}
-            \item Definir la sintaxis de un lenguaje
-            \item Definir la semántica de un lenguaje mediante reglas de reescritura
-            \item Uso de la libreria de maude para python
+            \item Especificación formal de un lenguaje imperativo
+            \item Representar la sintaxis
+            \item Representar la semántica mediante reglas de reescritura
+            \item Ejecutar la especificación
         \end{itemize}
     \end{frame}
 
@@ -136,6 +137,23 @@ op _= size(_) : Type Qid -> Assig [ctor] .
 op assigInMemory : Assig Memory -> Memory .
 eq assigInMemory(Q = E, M) = M [Q \ load(M, eval(E, M))] .
 eq assigInMemory(In = E, M) = M [toQid(In, M) \ load(M, eval(E, M))] .
+        \end{minted}
+    \end{frame}
+
+    \begin{frame}[fragile]{Asignaciones}
+        \begin{minted}[fontsize=\small]{haskell}
+op assigInMemoryMatrix : Qid Type Type Expression Memory -> Memory .
+eq assigInMemoryMatrix(Q, T, T', E, M) = 
+    M [toQid(Q, T, T', M) \ load(M, eval(E, M))] .
+        
+op assigInMemory : Assig Memory Nat -> Memory .
+eq assigInMemory(Q = [T A], M, N) = 
+    (M [qid(string(Q) + "<" + string(N, 10) + ">") \ load(M, T)]) 
+    assigInMemory(Q = [A], none, s(N)) .
+eq assigInMemory(In = [T A], M, N) = 
+    (M [qid(string(toQid(In, M)) + "<" + string(N, 10) + ">") \ load(M, T)]) 
+    assigInMemory(toQid(In, M) = [A], none, s(N)) .
+eq assigInMemory(T = [arrayEmpty], M, N) = M [owise] .
         \end{minted}
     \end{frame}
 
@@ -380,5 +398,10 @@ def main(filename):
 
     \section{Conclusiones}
     \begin{frame}{Conclusiones}
+        \begin{itemize}
+            \item Facilidad para la especificación formal de un lenguaje
+            \item Facilidad para ejecutar el lenguaje
+            \item Verificación de propiedades
+        \end{itemize}
     \end{frame}
 \end{document}
