@@ -1,5 +1,6 @@
-docs/**
+docs/
 !docs/presentation.tex
 !docs/presentation.pdf
 !docs/Makefile
+!docs/images/**
 .DS_Store
