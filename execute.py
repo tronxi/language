@@ -1,11 +1,5 @@
 import maude
 import sys
-import ctypes
-libmaude = ctypes.CDLL('libmaude.so')
-libmaude._ZN10IO_Manager11setAutoWrapEb(
-	libmaude.ioManager,
-	ctypes.c_bool(False)
-)
 
 def main(filename):
     programFile = open(filename, "r").read()
