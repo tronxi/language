@@ -1,6 +1,5 @@
 mod SEMANTICS is
     pr SYNTAX .
-    pr TYPE .
     pr IO .
     pr CONVERSION .
 
@@ -23,6 +22,7 @@ mod SEMANTICS is
     var O : Oid .
     var Length Length' : Int .
     var F F' : Function .
+    var R : Return .
 
     rl [printFinal] :
         {F function 'main() { final } | M }
@@ -34,10 +34,25 @@ mod SEMANTICS is
         =>
         { F function 'main() {P} | M} .
 
-    rl [eval] :
+    rl [callVoidFunction] :
         { F function 'main() {Q(); P } function Q () {PBody} | M }
         =>
         { F function 'main() {PBody P } function Q () {PBody} | M } .
+
+    rl [assignVoidFunction] :
+        { F function 'main() {(T = Q()); P } function Q () {PBody} | M }
+        =>
+        { F function 'main() {PBody P } function Q () {PBody} | M } .
+
+    rl [callReturnFunction] :
+        { F function 'main() {Q(); P } function Q () {PBody * R } | M }
+        =>
+        { F function 'main() {PBody P } function Q () {PBody * R} | M } .
+
+    rl [assignReturnFunction] :
+        { F function 'main() {(T = Q()); P } function Q () {PBody * return E ;} | M }
+        =>
+        { F function 'main() {PBody P } function Q () {PBody * return E ;} | assigInMemory(T = E, M)} .
 
     rl [printType] :
         < system : System | { F function 'main() {print(T); P}| M} >

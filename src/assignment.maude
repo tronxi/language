@@ -12,6 +12,7 @@ fmod ASSIGNMENT is
     op [ _ < _ > < _ > ] = _ : Qid Type Type Expression -> Assig [ctor] .
     op _=[_] : Type Array -> Assig [ctor] .
     op _= size(_) : Type Qid -> Assig [ctor] .
+    op _=_() : Type Qid -> Assig [ctor] .
 
     var Q : Qid .
     var E : Expression .

@@ -1,13 +1,18 @@
 function 'fun() {
-     print("antes");
-     return 5 ;
-}
+     println("antes");
+     println("aa");
+     println("ee");
+     ('var1 < 3 > = 456);
+     * return ('var1 < 3 >);
+ }
 
 function 'main() { 
      println("inicio del main");
-     'a();
+     'fun();
      println("final del main");
      'a();
+     ('var = 'fun());
+     print('var);
 }
 
 function 'a() { 

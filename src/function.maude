@@ -1,9 +1,8 @@
 fmod FUNCTION is
     pr PROGRAM .
-    sorts ReturnFunction Function Return .
-    subsort ReturnFunction < Function .
+    sorts Function Return .
 
     op return_; : Type -> Return [ctor] .
     op function_(){_} : Qid Program -> Function [ctor] .
-    op function_(){__} : Qid Program Return -> Function [ctor] .
+    op function_(){_*_} : Qid Program Return -> Function [ctor] .
 endfm
