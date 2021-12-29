@@ -1,8 +1,10 @@
-print("hola");
-('var1 = 10);
-do {
-    print("dentro");
-    ('var1 = 'var1 less 1);
-    println('var1);
-}while('var1 gt 1);
-print("adios");
+function 'main() {
+    print("hola");
+    ('var1 = 10);
+    do {
+        print("dentro");
+        ('var1 = 'var1 less 1);
+        println('var1);
+    }while('var1 gt 1);
+    print("adios");
+}

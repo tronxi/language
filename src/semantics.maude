@@ -6,7 +6,7 @@ mod SEMANTICS is
 
     sort System .
     subsort System < Attribute .
-    op {_|_} : Program Memory -> System [ctor] .
+    op {_|_} : Function Memory -> System [ctor] .
 
     op System : -> Cid . 
     op system : -> Oid . 
@@ -22,146 +22,157 @@ mod SEMANTICS is
     var S S' : String .
     var O : Oid .
     var Length Length' : Int .
-    
-    rl [coment] :
-       { // PBody P | M}
+    var F F' : Function .
+
+    rl [printFinal] :
+        {F function 'main() { final } | M }
         =>
-        { P | M} .
+        {F function 'main() { println(""); end } | M } .
+
+    rl [coment] :
+       { F function 'main() {// PBody P} | M}
+        =>
+        { F function 'main() {P} | M} .
+
+    rl [eval] :
+        { F function 'main() {Q(); P } function Q () {PBody} | M }
+        =>
+        { F function 'main() {PBody P } function Q () {PBody} | M } .
 
     rl [printType] :
-        < system : System | { print(T); P | M} >
+        < system : System | { F function 'main() {print(T); P}| M} >
         => 
-        < system : System |{ P | M} > print(string(load(M, T), 10), system) .
+        < system : System | { F function 'main() {P} | M} > print(string(load(M, T), 10), system) .
     
     rl [printTypeMatrix] :
-        < system : System | { print([ Q < T > < T' >]); P | M} >
+        < system : System | { F function 'main() {print([ Q < T > < T' >]); P} | M} >
         => 
-        < system : System |{ P | M} > print(string(load(M, toQid(Q, T, T', M)), 10), system) .
+        < system : System |{ F function 'main() {P} | M} > print(string(load(M, toQid(Q, T, T', M)), 10), system) .
 
     rl [printlnType] :
-        < system : System | { println(T); P | M} >
+        < system : System | { F function 'main() {println(T); P} | M} >
         => 
-        < system : System |{ P | M} > println(string(load(M, T), 10), system) .
+        < system : System |{ F function 'main() {P} | M} > println(string(load(M, T), 10), system) .
 
     rl [printlnTypeMatrix] :
-        < system : System | { println([ Q < T > < T' >]); P | M} >
+        < system : System | { F function 'main() {println([ Q < T > < T' >]); P} | M} >
         => 
-        < system : System |{ P | M} > println(string(load(M, toQid(Q, T, T', M)), 10), system) .
+        < system : System |{ F function 'main() {P} | M} > println(string(load(M, toQid(Q, T, T', M)), 10), system) .
     
     rl [printString] :
-        < system : System | { print(S); P | M} >
+        < system : System | { F function 'main() {print(S); P} | M} >
         => 
-       print(S, system) < system : System |{ P | M } > .
+       print(S, system) < system : System |{ F function 'main() {P} | M } > .
 
     rl [printlnString] :
-        < system : System | { println(S); P | M} >
+        < system : System | { F function 'main() {println(S); P} | M} >
         => 
-       println(S, system) < system : System |{ P | M } > .
+       println(S, system) < system : System |{F function 'main() { P }| M } > .
     
     rl [startScanf] :
-        < system : System | { scanf(T, S); P | M } >
+        < system : System | { F function 'main() {scanf(T, S); P }| M } >
         =>
-        getLine (stdin, system, S) < system : System | { (T =futureRead); P | M } > .
+        getLine (stdin, system, S) < system : System | { F function 'main() {(T =futureRead); P} | M } > .
 
     crl [endScanf] :
-        < system : System | { (T =futureRead); P | M } > gotLine (system, O, S)
+        < system : System | { F function 'main() {(T =futureRead); P} | M } > gotLine (system, O, S)
         =>
-        < system : System | { P | assigInMemory(T = T', M) } > 
+        < system : System | { F function 'main() {P} | assigInMemory(T = T', M) } > 
         if S =/= "" 
         /\ Length := length(S)
         /\ Length' := sd(Length, 1)
         /\ T' := rat(substr(S, 0, Length'), 10) .
 
     rl [startScanfInMatrix] :
-        < system : System | { scanf([ Q < T > < T' >], S); P | M } >
+        < system : System | { F function 'main() {scanf([ Q < T > < T' >], S); P} | M } >
         =>
-        getLine (stdin, system, S) < system : System | { ([ Q < T > < T' >] =futureRead); P | M } > .
+        getLine (stdin, system, S) < system : System | { F function 'main() { ([ Q < T > < T' >] =futureRead); P} | M } > .
 
     crl [endScanfInMatrix] :
-        < system : System | { ([ Q < T > < T' >] =futureRead); P | M } > gotLine (system, O, S)
+        < system : System | { F function 'main() {([ Q < T > < T' >] =futureRead); P }| M } > gotLine (system, O, S)
         =>
-        < system : System | { P | assigInMemoryMatrix(Q, T, T', T'', M) } > 
+        < system : System | {F function 'main() { P }| assigInMemoryMatrix(Q, T, T', T'', M) } > 
         if S =/= "" 
         /\ Length := length(S)
         /\ Length' := sd(Length, 1)
         /\ T'' := rat(substr(S, 0, Length'), 10) .
 
     rl [assigInMatrix] : 
-        { ([ Q < T > < T' >]= E); P | M}
+        { F function 'main() {([ Q < T > < T' >]= E); P} | M}
         =>
-        { P | assigInMemoryMatrix(Q, T, T', E, M) } .
+        { F function 'main() {P} | assigInMemoryMatrix(Q, T, T', E, M) } .
     
     rl [assigSize] : 
-        { (T = size(Q)); P | M}
+        { F function 'main() {(T = size(Q)); P} | M}
         =>
-        { P | assigInMemory(T = size(M, Q, 0), M) } .
+        { F function 'main() {P} | assigInMemory(T = size(M, Q, 0), M) } .
     
     rl [assig] : 
-        { (T = E); P | M}
+        { F function 'main() {(T = E); P} | M}
         =>
-        { P | assigInMemory(T = E, M) } .
+        { F function 'main() {P} | assigInMemory(T = E, M) } .
     
     rl [assigArray] :
-        { (T = [Array]); P | M}
+        { F function 'main() {(T = [Array]); P} | M}
         =>
-        { P | assigInMemory(T = [Array], M, 0)} .
+        { F function 'main() {P} | assigInMemory(T = [Array], M, 0)} .
 
     crl [ifTrue] :
-        { if(C){PBody} P | M }
+        { F function 'main() {if(C){PBody} P }| M }
         => 
-        { PBody P | M } 
+        { F function 'main() {PBody P} | M } 
         if eval(C, M) .
 
     crl [ifFalse] :
-        { if(C){PBody} P | M }
+        { F function 'main() {if(C){PBody} P} | M }
         => 
-        { P | M } 
+        { F function 'main() {P} | M } 
         if not eval(C, M) .
 
     crl [ifElseTrue] :
-        { if(C){PBody}else{PBodyElse} P | M }
+        { F function 'main() {if(C){PBody}else{PBodyElse} P} | M }
         => 
-        { PBody P | M } 
+        { F function 'main() {PBody P} | M } 
         if eval(C, M) .
 
     crl [ifElseFalse] :
-        { if(C){PBody}else{PBodyElse} P | M }
+        { F function 'main() {if(C){PBody}else{PBodyElse} P} | M }
         => 
-        { PBodyElse P | M } 
+        { F function 'main() {PBodyElse P} | M } 
         if not eval(C, M) .
 
     crl [whileTrue] :
-        { while(C){PBody} P | M }
+        { F function 'main() {while(C){PBody} P} | M }
         => 
-        { PBody while(C){PBody} P | M } 
+        { F function 'main() {PBody while(C){PBody} P} | M } 
         if eval(C, M) .
 
     crl [whileFalse] :
-        { while(C){PBody} P | M }
+        { F function 'main() {while(C){PBody} P} | M }
         => 
-        { P | M } 
+        { F function 'main() {P} | M } 
         if not eval(C, M) .
     
     rl [doWhile] :
-        { do {PBody} while(C); P | M}
+        { F function 'main() {do {PBody} while(C); P }| M}
         =>
-        {PBody while(C){PBody} P | M} .
+        {F function 'main() {PBody while(C){PBody} P} | M} .
 
     rl [initalFor] :
-        { for( (A); (C); (A'); ){PBody} P | M }
+        { F function 'main() {for( (A); (C); (A'); ){PBody} P} | M }
         =>
-        { (A); forWithoutInitial((C); (A'); ){PBody} P | M } .
+        { F function 'main() {(A); forWithoutInitial((C); (A'); ){PBody} P} | M } .
 
     crl [forTrue] :
-        { forWithoutInitial((C); (A'); ){PBody} P | M }
+        { F function 'main() {forWithoutInitial((C); (A'); ){PBody} P} | M }
         =>
-        { PBody (A'); forWithoutInitial((C); (A'); ){PBody} P | M }
+        { F function 'main() {PBody (A'); forWithoutInitial((C); (A');){PBody} P} | M }
         if eval(C, M) .
 
     crl [forFalse] :
-        { forWithoutInitial((C); (A'); ){PBody} P | M }
+        { F function 'main() {forWithoutInitial((C); (A'); ){PBody} P} | M }
         =>
-        { P | M }
+        { F function 'main() {P} | M }
         if not eval(C, M) .
 
 endm

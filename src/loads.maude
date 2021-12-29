@@ -6,5 +6,7 @@ load assignment .
 load file .
 load io .
 load condition .
+load program .
+load function .
 load syntax .
 load semantics .

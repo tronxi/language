@@ -1,0 +1,16 @@
+function 'fun() {
+     print("antes");
+     return 5 ;
+}
+
+function 'main() { 
+     println("inicio del main");
+     'a();
+     println("final del main");
+     'a();
+}
+
+function 'a() { 
+     println("dentro de la funcion");
+     println("esa funcionciiita");
+}
