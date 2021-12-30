@@ -3,7 +3,7 @@ function 'fun() {
      println("aa");
      println("ee");
      ('var1 < 3 > = 456);
-     * return ('var1 < 3 >);
+     # return ('var1 < 3 >);
  }
 
 function 'main() { 
@@ -11,8 +11,8 @@ function 'main() {
      'fun();
      println("final del main");
      'a();
-     ('var = 'fun());
-     print('var);
+     ('var < 2 > = 'fun());
+     print('var < 2 >);
 }
 
 function 'a() { 

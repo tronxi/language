@@ -45,14 +45,14 @@ mod SEMANTICS is
         { F function 'main() {PBody P } function Q () {PBody} | M } .
 
     rl [callReturnFunction] :
-        { F function 'main() {Q(); P } function Q () {PBody * R } | M }
+        { F function 'main() {Q(); P } function Q () {PBody # R } | M }
         =>
-        { F function 'main() {PBody P } function Q () {PBody * R} | M } .
+        { F function 'main() {PBody P } function Q () {PBody # R} | M } .
 
     rl [assignReturnFunction] :
-        { F function 'main() {(T = Q()); P } function Q () {PBody * return E ;} | M }
+        { F function 'main() {(T = Q()); P } function Q () {PBody # return E ;} | M }
         =>
-        { F function 'main() {PBody P } function Q () {PBody * return E ;} | assigInMemory(T = E, M)} .
+        { F function 'main() {PBody P } function Q () {PBody # return E ;} | assigInMemory(T = E, M)} .
 
     rl [printType] :
         < system : System | { F function 'main() {print(T); P}| M} >
