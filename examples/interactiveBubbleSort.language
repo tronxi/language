@@ -1,12 +1,23 @@
 function 'main() {
-    scanf('n, "Introduce la longitud del vector: ");
-    for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
-        scanf('v < 'i > , "Introduce un numero: ");
-    }
+    'initArray();
 
     print("Desordenado: ");
     'printArray();
 
+    'bubbleSort();
+
+    print("Ordenado: ");
+    'printArray();
+}
+
+function 'initArray() {
+    scanf('n, "Introduce la longitud del vector: ");
+    for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
+        scanf('v < 'i > , "Introduce un numero: ");
+    }
+}
+
+function 'bubbleSort() {
     for(('i = 0); ('i lt 'n); ('i = 'i sum 1);) {
         for(('j = 1); ('j lt ('n less 'i)); ('j = 'j sum 1);) {
             ('ant = 'j less 1);
@@ -17,10 +28,6 @@ function 'main() {
             }
         }
     }
-
-    println("");
-    print("Ordenado: ");
-    'printArray();
 }
 
 function 'printArray() {
@@ -28,4 +35,5 @@ function 'printArray() {
         print('v < 'i >);
         print(" ");
     }
+    println("");
 }

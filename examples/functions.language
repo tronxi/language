@@ -1,7 +1,4 @@
 function 'fun() {
-     println("antes");
-     println("aa");
-     println("ee");
      ('var1 < 3 > = 456);
      # return ('var1 < 3 >);
  }
@@ -9,13 +6,21 @@ function 'fun() {
 function 'main() { 
      println("inicio del main");
      'fun();
-     println("final del main");
      'a();
      ('var < 2 > = 'fun());
-     print('var < 2 >);
+     println('var < 2 >);
+     ('var1 = 2);
+     ('var2 = 3);
+     ('result = 'sum());
+     println('result);
+     println("final del main");
 }
 
 function 'a() { 
      println("dentro de la funcion");
-     println("esa funcionciiita");
+}
+
+function 'sum() {
+     ('result = 'var1 sum 'var2);
+     # return 'result ;
 }
