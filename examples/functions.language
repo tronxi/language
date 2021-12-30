@@ -1,23 +1,14 @@
-function 'fun() {
-     ('var1 < 3 > = 456);
-     # return ('var1 < 3 >);
- }
-
 function 'main() { 
      println("inicio del main");
-     'fun();
      'a();
-     ('var < 2 > = 'fun());
-     println('var < 2 >);
      ('var1 = 2);
      ('var2 = 3);
      ('result = 'sum());
      println('result);
-     println("final del main");
 }
 
 function 'a() { 
-     println("dentro de la funcion");
+     println("funcionciita");
 }
 
 function 'sum() {
