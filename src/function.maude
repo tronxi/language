@@ -5,4 +5,5 @@ fmod FUNCTION is
     op return_; : Type -> Return [ctor] .
     op function_(){_} : Qid Program -> Function [ctor] .
     op function_(){_#_} : Qid Program Return -> Function [ctor] .
+    op function_(){#_} : Qid Return -> Function [ctor] .
 endfm

@@ -49,10 +49,25 @@ mod SEMANTICS is
         =>
         { F function 'main() {PBody P } function Q () {PBody # R} | M } .
 
-    rl [assignReturnFunction] :
+    rl [callAssignReturnFunction] :
         { F function 'main() {(T = Q()); P } function Q () {PBody # return E ;} | M }
         =>
-        { F function 'main() {PBody P } function Q () {PBody # return E ;} | assigInMemory(T = E, M)} .
+        { F function 'main() {PBody return T -> E ; P } function Q () {PBody # return E ;} | M} .
+
+    rl [callOnlyReturnFunction] :
+        { F function 'main() {Q(); P } function Q () { # R } | M }
+        =>
+        { F function 'main() { P } function Q () { # R} | M } .
+
+    rl [callAssignOnlyReturnFunction] :
+        { F function 'main() {(T = Q()); P } function Q () { # return E ;} | M }
+        =>
+        { F function 'main() { return T -> E ; P } function Q () { # return E ;} | M } .
+    
+    rl [assignReturn] :
+        { F function 'main() { return T -> E ; P } | M } 
+        =>
+        { F function 'main() { P } | assigInMemory(T = E, M) } .
 
     rl [printType] :
         < system : System | { F function 'main() {print(T); P}| M} >

@@ -25,6 +25,7 @@ fmod PROGRAM is
     op for((_);(_);(_);) {_} : Assig Condition Assig Program -> Program [ctor] .
     op forWithoutInitial((_);(_);) {_} : Condition Assig Program -> Program [ctor] .
     op _(); : Qid -> Program [ctor] .
+    op return_->_; : Type Qid -> Program [ctor] .
     op __ : Program Program -> Program [ctor assoc id: final] .
     
 endfm
