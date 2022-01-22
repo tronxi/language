@@ -3,9 +3,11 @@ import sys
 
 def main(filename):
     programFile = open(filename, "r").read()
+    initialProgram = "function 'main() { print(\"\"); print(\"\"); print(\"\"); "
+    generatedProgramFile = programFile.replace("function 'main() {", initialProgram)
 
-    system = " < system : System |{ print(\"\"); print(\"\"); ${program} println(\"\"); | none } > "
-    generatedSystem = system.replace("${program}", programFile)
+    system = " < system : System | { ${program} | none } > "
+    generatedSystem = system.replace("${program}", generatedProgramFile)
 
     maude.init()
     maude.load("src/loads.maude")

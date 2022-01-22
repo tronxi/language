@@ -1,7 +1,11 @@
-scanf('n, "Introduce la longitud del vector: ");
-for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
-    scanf('a < 'i > , "Introduce un numero: ");
-}
-for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
-    print('a < 'i >);
+function 'main() {
+    print("");
+    print("");
+    scanf('n, "Introduce la longitud del vector: ");
+    for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
+        scanf('a < 'i > , "Introduce un numero: ");
+    }
+    for(('i = 0); ('i lt 'n); ('i = 'i sum 1);){
+        print('a < 'i >);
+    }
 }

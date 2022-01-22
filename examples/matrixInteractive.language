@@ -1,13 +1,15 @@
-for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
-    for(('j = 0 ); ('j lte 1); ('j = 'j sum 1);) {
-        scanf(['aa < 'i > < 'j >], "Introduce un numero: ");
+function 'main() {
+    for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
+        for(('j = 0 ); ('j lte 1); ('j = 'j sum 1);) {
+            scanf(['aa < 'i > < 'j >], "Introduce un numero: ");
+        }
     }
-}
-for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
-    for(('j = 0 ); ('j lte 1); ('j = 'j sum 1);) {
-        ('value = 'aa < 'i > < 'j >);
-        (['double < 'i > < 'j >] = 'value mult 2);
-        print(['double < 'i > < 'j >]);
+    for(('i = 0 ); ('i lte 1); ('i = 'i sum 1);) {
+        for(('j = 0 ); ('j lte 1); ('j = 'j sum 1);) {
+            ('value = 'aa < 'i > < 'j >);
+            (['double < 'i > < 'j >] = 'value mult 2);
+            print(['double < 'i > < 'j >]);
+        }
+        println("");
     }
-    println("");
 }

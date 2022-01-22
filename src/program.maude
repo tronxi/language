@@ -1,0 +1,31 @@
+fmod PROGRAM is
+    pr CONDITION .
+    pr ASSIGNMENT .
+
+    sort Program .
+    op final : -> Program [ctor] .
+    op end : -> Program [ctor] .
+    op //_ : Program -> Program [ctor] .
+    op function main() {_} : Program -> Program [ctor] .
+    op (_); : Assig -> Program [ctor] .
+    op print(_); : Type -> Program [ctor] .
+    op print([ _ < _ > < _ > ]); : Qid Type Type -> Program [ctor] .
+    op println([ _ < _ > < _ > ]); : Qid Type Type -> Program [ctor] .
+    op println(_); : Type -> Program [ctor] .
+    op print(_); : String -> Program [ctor] .
+    op println(_); : String -> Program [ctor] .
+    op scanf(_,_); : Type String -> Program [ctor] .
+    op scanf([ _ < _ > < _ > ],_); : Qid Type Type String -> Program [ctor] .
+    op (_=futureRead); : Type -> Program [ctor] .
+    op ([ _ < _ > < _ > ]=futureRead); : Qid Type Type -> Program [ctor] .  
+    op if(_) {_} : Condition Program -> Program [ctor] .
+    op if(_) {_} else {_} : Condition Program Program -> Program [ctor] .
+    op while(_) {_} : Condition Program -> Program [ctor] .
+    op do {_} while(_); : Program Condition -> Program [ctor] .
+    op for((_);(_);(_);) {_} : Assig Condition Assig Program -> Program [ctor] .
+    op forWithoutInitial((_);(_);) {_} : Condition Assig Program -> Program [ctor] .
+    op _(); : Qid -> Program [ctor] .
+    op return_->_; : Type Qid -> Program [ctor] .
+    op __ : Program Program -> Program [ctor assoc id: final] .
+    
+endfm
